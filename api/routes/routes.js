@@ -27,7 +27,6 @@ router.post(
   
               return next(error);
             }
-  
             req.login(
               user,
               { session: false },

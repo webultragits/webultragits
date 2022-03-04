@@ -4,6 +4,11 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 
 const UserModel = require('./model/model');
+const PermissionModel = require('./model/permission_model');
+const RolesModel = require('./model/roles_model');
+const HasPermissionModel = require('./model/model_has_permissions_model');
+const HasRolesModel = require('./model/model_has_roles_model');
+const RoleHasPermissionModel = require('./model/role_has_permissions_model');
 
 mongoose.connect('mongodb+srv://kingoftiruppur:king74991@cluster0.l29mm.mongodb.net/muslim_pro?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('error', error => console.log(error) );
@@ -15,6 +20,18 @@ const routes = require('./routes/routes');
 const secureRoute = require('./routes/secure-routes');
 
 const app = express();
+
+/*const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title:'Employee API',
+            version:'1.0.0'
+        }
+    },
+    apis:['api.js'],
+}
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs));*/
 
 app.use(bodyParser.urlencoded({ extended: false }));
 

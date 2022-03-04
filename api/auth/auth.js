@@ -21,17 +21,23 @@ passport.use(
   )
 );
 
-
-passport.use(
-    'signup',
-    new localStrategy(
-      {
+/**
+ * @swagger
+ * /signup:
+ *   get:
+ *     description: Signup process
+ *     responses:
+ *       200:
+ *         description: Success
+ *
+ */
+passport.use('signup', new localStrategy({
         usernameField: 'email',
         passwordField: 'password'
       },
       async (email, password, done) => {
         try {
-          const user = await UserModel.create({ email, password });
+          const user = await UserModel.create({email, password});
   
           return done(null, user);
         } catch (error) {
@@ -41,16 +47,24 @@ passport.use(
     )
   );
 
-  passport.use(
-    'login',
-    new localStrategy(
+/**
+ * @swagger
+ * /login:
+ *   get:
+ *     description: Login process
+ *     responses:
+ *       200:
+ *         description: Success
+ *
+ */
+  passport.use('login', new localStrategy(
       {
         usernameField: 'email',
         passwordField: 'password'
       },
       async (email, password, done) => {
         try {
-          const user = await UserModel.findOne({ email });
+          const user = await UserModel.findOne({email});
   
           if (!user) {
             return done(null, false, { message: 'User not found' });
@@ -63,7 +77,8 @@ passport.use(
           }
   
           return done(null, user, { message: 'Logged in Successfully' });
-        } catch (error) {
+        }
+        catch (error) {
           return done(error);
         }
       }

@@ -12,19 +12,25 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
-});
+  },
+    role: {
+        type: Number,
+        default: 0
+    },
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
+    }
+}, {timestamps: true});
 
-UserSchema.pre(
-  'save',
-  async function(next) {
+UserSchema.pre('save', async function(next) {
     const user = this;
     const hash = await bcrypt.hash(this.password, 10);
 
     this.password = hash;
     next();
-  }
-);
+  });
 
 UserSchema.methods.isValidPassword = async function(password) {
   const user = this;
